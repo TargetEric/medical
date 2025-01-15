@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat Interface</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 15px;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Ask a Question</h1>
+<input type="text" id="userInput" placeholder="Type your question here...">
+<button id="submitBtn">Submit</button>
+
+<div id="response"></div>
+
+<script>
+    document.getElementById('submitBtn').addEventListener('click', function() {
+        const userInput = document.getElementById('userInput').value;
+        const encodedInput = encodeURIComponent(userInput);
+        const url = `https://chatwithai.codesearch.workers.dev/?chat=${encodedInput}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = data.data;
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = 'Error: ' + error.message;
+            });
+    });
+</script>
+
+</body>
+</html>
